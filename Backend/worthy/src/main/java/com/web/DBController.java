@@ -30,6 +30,8 @@ public class DBController extends HttpServlet {
     Empresa empresa = new Empresa();
     Reto reto = new Reto();
     Gson gson = new Gson();
+
+    //BORRAR
     
 
     public void iniciar() throws SQLException{
