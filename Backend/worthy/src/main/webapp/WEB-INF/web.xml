@@ -1,0 +1,169 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <!--.........................USUARIO.........................-->
+
+  <!--...............GET...............-->
+  <servlet>
+    <servlet-name>LoginUsuario</servlet-name>
+    <servlet-class>com.web.log.LoginUsuario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginUsuario</servlet-name>
+    <url-pattern>/loginUsuario</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetUsuarioId</servlet-name>
+    <servlet-class>com.web.log.GetUsuarioId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetUsuarioId</servlet-name>
+    <url-pattern>/getUsuarioId</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............POST...............-->
+  <servlet>
+    <servlet-name>RegistroUsuario</servlet-name>
+    <servlet-class>com.web.log.RegistroUsuario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegistroUsuario</servlet-name>
+    <url-pattern>/registroUsuario</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............PUT...............-->
+  <servlet>
+    <servlet-name>PutUsuario</servlet-name>
+    <servlet-class>com.web.log.PutUsuario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PutUsuario</servlet-name>
+    <url-pattern>/putUsuario</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............DELETE...............-->
+  <servlet>
+    <servlet-name>DeleteUsuarioId</servlet-name>
+    <servlet-class>com.web.log.DeleteUsuarioId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteUsuarioId</servlet-name>
+    <url-pattern>/deleteUsuarioId</url-pattern>
+  </servlet-mapping>
+
+
+
+  <!--.........................EMPRESA.........................-->
+
+  <!--...............GET...............-->
+  <servlet>
+    <servlet-name>LoginEmpresa</servlet-name>
+    <servlet-class>com.web.log.LoginEmpresa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginEmpresa</servlet-name>
+    <url-pattern>/loginEmpresa</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetEmpresaId</servlet-name>
+    <servlet-class>com.web.log.GetEmpresaId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetEmpresaId</servlet-name>
+    <url-pattern>/getEmpresaId</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............POST...............-->
+  <servlet>
+    <servlet-name>RegistroEmpresa</servlet-name>
+    <servlet-class>com.web.log.RegistroEmpresa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegistroEmpresa</servlet-name>
+    <url-pattern>/registroEmpresa</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............PUT...............-->
+  <servlet>
+    <servlet-name>PutEmpresa</servlet-name>
+    <servlet-class>com.web.log.PutEmpresa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PutEmpresa</servlet-name>
+    <url-pattern>/putEmpresa</url-pattern>
+  </servlet-mapping>
+
+  <!--...............DELETE...............-->
+  <servlet>
+    <servlet-name>DeleteEmpresaId</servlet-name>
+    <servlet-class>com.web.log.DeleteEmpresaId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteEmpresaId</servlet-name>
+    <url-pattern>/deleteEmpresaId</url-pattern>
+  </servlet-mapping>
+
+
+  <!--.........................RETO.........................-->
+
+  <!--...............GET...............-->
+  <servlet>
+    <servlet-name>GetRetos</servlet-name>
+    <servlet-class>com.web.retos.GetRetos</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRetos</servlet-name>
+    <url-pattern>/getRetos</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetRetoId</servlet-name>
+    <servlet-class>com.web.retos.GetRetoId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRetoId</servlet-name>
+    <url-pattern>/getRetoId</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............POST...............-->
+  <servlet>
+    <servlet-name>PostReto</servlet-name>
+    <servlet-class>com.web.retos.PostReto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostReto</servlet-name>
+    <url-pattern>/postReto</url-pattern>
+  </servlet-mapping>
+
+  <!--...............PUT...............-->
+  <servlet>
+    <servlet-name>PutReto</servlet-name>
+    <servlet-class>com.web.retos.PutReto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PutReto</servlet-name>
+    <url-pattern>/putReto</url-pattern>
+  </servlet-mapping>
+
+  <!--...............DELETE...............-->
+  <servlet>
+    <servlet-name>DeleteRetoId</servlet-name>
+    <servlet-class>com.web.retos.DeleteRetoId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteRetoId</servlet-name>
+    <url-pattern>/deleteRetoId</url-pattern>
+  </servlet-mapping>
+
+</web-app>
