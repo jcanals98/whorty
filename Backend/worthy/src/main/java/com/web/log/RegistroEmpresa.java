@@ -5,8 +5,6 @@ import javax.servlet.http.*;
 
 import java.io.*;
 import java.sql.*;
-import java.util.Enumeration;
-import java.util.*;
 
 import com.web.DBController;
 import com.web.tablas.Empresa;

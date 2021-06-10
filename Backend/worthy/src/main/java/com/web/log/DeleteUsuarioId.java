@@ -5,14 +5,10 @@ import javax.servlet.http.*;
 
 import java.io.*;
 import java.sql.*;
-import java.util.*;
 
 import com.web.DBController;
-import com.web.tablas.*;
-import com.google.gson.*;
 
 public class DeleteUsuarioId extends HttpServlet {
-   
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DBController db = new DBController();
         PrintWriter out = response.getWriter();

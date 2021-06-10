@@ -135,6 +135,42 @@
     <url-pattern>/getRetoId</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>GetRetosNivel</servlet-name>
+    <servlet-class>com.web.retos.GetRetosNivel</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRetosNivel</servlet-name>
+    <url-pattern>/getRetosNivel</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetRetosTecnologia</servlet-name>
+    <servlet-class>com.web.retos.GetRetosTecnologia</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRetosTecnologia</servlet-name>
+    <url-pattern>/getRetosTecnologia</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetRetosNombre</servlet-name>
+    <servlet-class>com.web.retos.GetRetosNombre</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRetosNombre</servlet-name>
+    <url-pattern>/getRetosNombre</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetRetosFechaLimite</servlet-name>
+    <servlet-class>com.web.retos.GetRetosFechaLimite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRetosFechaLimite</servlet-name>
+    <url-pattern>/getRetosFechaLimite</url-pattern>
+  </servlet-mapping>
+
 
   <!--...............POST...............-->
   <servlet>
@@ -165,5 +201,80 @@
     <servlet-name>DeleteRetoId</servlet-name>
     <url-pattern>/deleteRetoId</url-pattern>
   </servlet-mapping>
+
+
+  <!--.........................COMENTARIO.........................-->
+
+  <!--...............GET...............-->
+
+  <servlet>
+    <servlet-name>GetComentariosPost</servlet-name>
+    <servlet-class>com.web.comentarios.GetComentariosPost</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetComentariosPost</servlet-name>
+    <url-pattern>/getComentariosPost</url-pattern>
+  </servlet-mapping>
+  <servlet>
+
+    <servlet-name>GetComentariosUsuario</servlet-name>
+    <servlet-class>com.web.comentarios.GetComentariosUsuario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetComentariosUsuario</servlet-name>
+    <url-pattern>/getComentariosUsuario</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetComentariosEmpresa</servlet-name>
+    <servlet-class>com.web.comentarios.GetComentariosEmpresa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetComentariosEmpresa</servlet-name>
+    <url-pattern>/getComentariosEmpresa</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............POST...............-->
+
+  <servlet>
+    <servlet-name>PostComentario</servlet-name>
+    <servlet-class>com.web.comentarios.PostComentario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostComentario</servlet-name>
+    <url-pattern>/postComentario</url-pattern>
+  </servlet-mapping>
+
+  <!--...............PUT...............-->
+
+  
+  <servlet>
+    <servlet-name>PutComentario</servlet-name>
+    <servlet-class>com.web.comentarios.PutComentario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PutComentario</servlet-name>
+    <url-pattern>/putComentario</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............DELETE...............-->
+
+
+  <!--.........................POST / db.........................-->
+
+  <!--...............GET...............-->
+
+
+  <!--...............POST...............-->
+
+
+  <!--...............PUT...............-->
+
+
+  <!--...............DELETE...............-->
+
+
 
 </web-app>

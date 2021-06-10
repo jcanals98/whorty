@@ -5,11 +5,8 @@ import javax.servlet.http.*;
 
 import java.io.*;
 import java.sql.*;
-import java.util.Enumeration;
-import java.util.*;
 
 import com.web.DBController;
-import com.web.tablas.Usuario;
 
 public class PutUsuario extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

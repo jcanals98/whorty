@@ -1,7 +1,5 @@
 package com.web.tablas;
 
-import java.sql.Date;  
-
 public class Reto {
 
     public Integer id;
@@ -12,7 +10,7 @@ public class Reto {
     public Integer participantesMax;
     public Integer participantes;
     public Integer multimedia_id;
-    public Integer nivell;
+    public Integer nivel;
     public String fecha_limite;
 
 
@@ -80,12 +78,12 @@ public class Reto {
         this.multimedia_id = multimedia_id;
     }
 
-    public Integer getNivell() {
-        return this.nivell;
+    public Integer getNivel() {
+        return this.nivel;
     }
 
-    public void setNivell(Integer nivell) {
-        this.nivell = nivell;
+    public void setNivel(Integer nivel) {
+        this.nivel = nivel;
     }
 
     public String getFecha_limite() {

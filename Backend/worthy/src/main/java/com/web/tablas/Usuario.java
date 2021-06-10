@@ -1,6 +1,4 @@
 package com.web.tablas;
-import  com.google.gson.Gson;    
-
 
 public class Usuario {
 

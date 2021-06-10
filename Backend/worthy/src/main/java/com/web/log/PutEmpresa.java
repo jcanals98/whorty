@@ -5,11 +5,7 @@ import javax.servlet.http.*;
 
 import java.io.*;
 import java.sql.*;
-import java.util.Enumeration;
-import java.util.*;
-
 import com.web.DBController;
-import com.web.tablas.Empresa;
 
 public class PutEmpresa extends HttpServlet {
     private static final long serialVersionUID = 1L;
