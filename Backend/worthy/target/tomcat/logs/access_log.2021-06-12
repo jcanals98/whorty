@@ -1,0 +1,4 @@
+127.0.0.1 - - [12/Jun/2021:15:29:08 +0200] "GET /worthy/getURUsuarios?id=1 HTTP/1.1" 500 3274 http-bio-8080-exec-1 94
+0:0:0:0:0:0:0:1 - - [12/Jun/2021:15:29:25 +0200] "GET /worthy/getURUsuarios?id=1 HTTP/1.1" 404 949 http-bio-8080-exec-3 2
+0:0:0:0:0:0:0:1 - - [12/Jun/2021:15:33:55 +0200] "GET /worthy/getURUsuarios?id=1 HTTP/1.1" 500 3274 http-bio-8080-exec-2 93
+127.0.0.1 - - [12/Jun/2021:15:34:34 +0200] "GET /worthy/getURUsuarios?id=1 HTTP/1.1" 200 90 http-bio-8080-exec-2 922

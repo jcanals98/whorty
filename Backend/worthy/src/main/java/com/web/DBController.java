@@ -16,13 +16,14 @@ public class DBController extends HttpServlet {
     private static final String PASSWORD = "root";
 
     static Scanner sc = new Scanner(System.in);
-    Connection con=null;
-    Statement stmt=null;
+    Connection con = null;
+    Statement stmt = null;
     Usuario usuario = new Usuario();
     Empresa empresa = new Empresa();
     Reto reto = new Reto();
     Comentario comentario = new Comentario();
     Post post = new Post();
+    UsuariosRetos usre = new UsuariosRetos();
     Gson gson = new Gson();
 
     public void iniciar() throws SQLException{
@@ -290,7 +291,7 @@ public class DBController extends HttpServlet {
                     reto.setTecnologias(rs.getString("tecnologias"));
                     reto.setParticipantesMax(rs.getInt("participantesMax"));
                     reto.setParticipantes(rs.getInt("participantes"));
-                    reto.setParticipantes(rs.getInt("multimedia_id"));
+                    reto.setMultimedia(rs.getString("multimedia"));
                     reto.setNivel(rs.getInt("nivel"));
                     reto.setFecha_limite(rs.getString("fecha_limite"));
         
@@ -315,7 +316,7 @@ public class DBController extends HttpServlet {
                 reto.setTecnologias(rs.getString("tecnologias"));
                 reto.setParticipantesMax(rs.getInt("participantesMax"));
                 reto.setParticipantes(rs.getInt("participantes"));
-                reto.setParticipantes(rs.getInt("multimedia_id"));
+                reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 }
@@ -339,7 +340,7 @@ public class DBController extends HttpServlet {
                 reto.setTecnologias(rs.getString("tecnologias"));
                 reto.setParticipantesMax(rs.getInt("participantesMax"));
                 reto.setParticipantes(rs.getInt("participantes"));
-                reto.setParticipantes(rs.getInt("multimedia_id"));
+                reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
@@ -365,7 +366,7 @@ public class DBController extends HttpServlet {
                 reto.setTecnologias(rs.getString("tecnologias"));
                 reto.setParticipantesMax(rs.getInt("participantesMax"));
                 reto.setParticipantes(rs.getInt("participantes"));
-                reto.setParticipantes(rs.getInt("multimedia_id"));
+                reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
@@ -391,7 +392,7 @@ public class DBController extends HttpServlet {
                 reto.setTecnologias(rs.getString("tecnologias"));
                 reto.setParticipantesMax(rs.getInt("participantesMax"));
                 reto.setParticipantes(rs.getInt("participantes"));
-                reto.setParticipantes(rs.getInt("multimedia_id"));
+                reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
@@ -418,7 +419,7 @@ public class DBController extends HttpServlet {
                 reto.setTecnologias(rs.getString("tecnologias"));
                 reto.setParticipantesMax(rs.getInt("participantesMax"));
                 reto.setParticipantes(rs.getInt("participantes"));
-                reto.setParticipantes(rs.getInt("multimedia_id"));
+                reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
@@ -434,9 +435,9 @@ public class DBController extends HttpServlet {
     //////////////// POST ////////////////
 
     // Crea un reto con un archivo multimedia
-    public String postReto(Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, Integer multimedia_id, Integer nivel, String fecha_limite) throws SQLException{
+    public String postReto(Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, String multimedia, Integer nivel, String fecha_limite) throws SQLException{
         PreparedStatement stmt = con.prepareStatement("INSERT INTO `retos`" +
-        " (`id_creador`, `nombre`, `descripcion`, `tecnologias`, `participantesMax`, `participantes`, `multimedia_id`, `nivel`, `fecha_limite`)" +
+        " (`id_creador`, `nombre`, `descripcion`, `tecnologias`, `participantesMax`, `participantes`, `multimedia`, `nivel`, `fecha_limite`)" +
         " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
         
@@ -446,7 +447,7 @@ public class DBController extends HttpServlet {
         stmt.setString(4, (tecnologias==null)?"":tecnologias);
         stmt.setInt(5, (participantesMax==null)?0:participantesMax);
         stmt.setInt(6, (participantes==null)?0:participantes);
-        stmt.setInt(7, (multimedia_id==null)?null:multimedia_id);
+        stmt.setString(7, (multimedia==null)?"":multimedia);
         stmt.setInt(8, (nivel==null)?null:nivel);
         stmt.setString(9, (fecha_limite==null)?null:fecha_limite);
 
@@ -476,7 +477,7 @@ public class DBController extends HttpServlet {
 
     //////////////// PUT ////////////////
     
-    public String putReto(Integer id, Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, Integer multimedia_id, Integer nivel, String fecha_limite) throws SQLException{
+    public String putReto(Integer id, Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, String multimedia, Integer nivel, String fecha_limite) throws SQLException{
         Reto retoNew = new Reto();
         Reto retoOld = new Reto();
         String SQL = "SELECT * FROM retos WHERE id='" + id + "'";
@@ -490,7 +491,7 @@ public class DBController extends HttpServlet {
                 retoOld.setTecnologias(rs.getString("tecnologias"));
                 retoOld.setParticipantesMax(rs.getInt("participantesMax"));
                 retoOld.setParticipantes(rs.getInt("participantes"));
-                retoOld.setMultimedia_id(rs.getInt("multimedia_id"));
+                retoOld.setMultimedia(rs.getString("multimedia"));
                 retoOld.setNivel(rs.getInt("nivel"));
                 retoOld.setFecha_limite(rs.getString("fecha_limite"));
             }
@@ -504,14 +505,14 @@ public class DBController extends HttpServlet {
         retoNew.setTecnologias((tecnologias==null)?retoOld.getTecnologias():tecnologias);
         retoNew.setParticipantesMax((participantesMax==null)?retoOld.getParticipantesMax():participantesMax);
         retoNew.setParticipantes((participantes==null)?retoOld.getParticipantes():participantes);
-        retoNew.setMultimedia_id((multimedia_id==null)?retoOld.getMultimedia_id():multimedia_id);
+        retoNew.setMultimedia((multimedia==null)?retoOld.getMultimedia():multimedia);
         retoNew.setNivel((nivel==null)?retoOld.getNivel():nivel);
         retoNew.setFecha_limite((fecha_limite==null)?retoOld.getFecha_limite():fecha_limite);
 
         PreparedStatement stmt=con.prepareStatement("UPDATE `retos`" + 
         "SET `id_creador` = '" + retoNew.getId_Creador() + "', `nombre` = '" + retoNew.getNombre() + "', `descripcion` = '" + retoNew.getDescripcion() + "',"+
         "`tecnologias` = '" + retoNew.getTecnologias() + "', `participantesMax` = '" + retoNew.getParticipantesMax() + "', `participantes` = '" + retoNew.getParticipantes() + "', " +
-        "`nivel` = '" + retoNew.getNivel() + "', `fecha_limite` = '" + retoNew.getFecha_limite() + "' WHERE `id` = " + id + ";");  
+        "`multimedia` = '" + retoNew.getMultimedia() + "', `nivel` = '" + retoNew.getNivel() + "', `fecha_limite` = '" + retoNew.getFecha_limite() + "' WHERE `id` = " + id + ";");  
 
         stmt.executeUpdate();  
         
@@ -527,7 +528,6 @@ public class DBController extends HttpServlet {
 
         return "El reto se ha eliminado correctamente!";
     }
-
 
 
     //////////////////////////////// Comentario ////////////////////////////////
@@ -546,7 +546,7 @@ public class DBController extends HttpServlet {
                 comentario.setPosts_id(rs.getInt("posts_id"));
                 comentario.setUsuario_id(rs.getInt("usuarios_id"));
                 comentario.setUsuario_id(rs.getInt("empresas_id"));
-                comentario.setMultimedia_id(rs.getInt("multimedia_id"));
+                comentario.setMultimedia(rs.getString("multimedia"));
                 comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
                 comentariosList.add(gson.toJson(comentario));
@@ -568,7 +568,7 @@ public class DBController extends HttpServlet {
                 comentario.setComentario(rs.getString("comentario"));
                 comentario.setPosts_id(rs.getInt("posts_id"));
                 comentario.setUsuario_id(rs.getInt("usuarios_id"));
-                comentario.setMultimedia_id(rs.getInt("multimedia_id"));
+                comentario.setMultimedia(rs.getString("multimedia"));
                 comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
                 comentariosList.add(gson.toJson(comentario));
@@ -590,7 +590,7 @@ public class DBController extends HttpServlet {
                 comentario.setComentario(rs.getString("comentario"));
                 comentario.setPosts_id(rs.getInt("posts_id"));
                 comentario.setUsuario_id(rs.getInt("empresas_id"));
-                comentario.setMultimedia_id(rs.getInt("multimedia_id"));
+                comentario.setMultimedia(rs.getString("multimedia"));
                 comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
                 comentariosList.add(gson.toJson(comentario));
@@ -604,26 +604,26 @@ public class DBController extends HttpServlet {
 
     //////////////// POST ////////////////
 
-    // Crea un post con un archivo multimedia
-    public String postComentario(String comentario, Integer posts_id, Integer usuarios_id, Integer empresas_id, Integer multimedia_id, String fecha_creacion) throws SQLException{
+    // Crea un comentario con un archivo multimedia
+    public String postComentario(String comentario, Integer posts_id, Integer usuarios_id, Integer empresas_id, String multimedia, String fecha_creacion) throws SQLException{
         if(usuarios_id==0){
             // Crea un comentario como una empresa
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `comentarios`" +
-            " (`comentario`, `posts_id`, `empresas_id`, `multimedia_id`, `fecha_creacion`)" +
+            " (`comentario`, `posts_id`, `empresas_id`, `multimedia`, `fecha_creacion`)" +
             " VALUES (?, ?, ?, ?, ?);");
 
             stmt.setString(1, comentario);
             stmt.setInt(2, posts_id);
             stmt.setInt(3, (empresas_id==null)?null:empresas_id);
-            stmt.setInt(4, (multimedia_id==null)?null:multimedia_id);
+            stmt.setString(4, (multimedia==null)?"":multimedia);
             stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+            return "El comentario se ha registrado correctamente!";
         }else{
             // Crea un comentario como un usuario
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `comentarios`" +
-            " (`comentario`, `posts_id`, `usuarios_id`,  `multimedia_id`, `fecha_creacion`)" +
+            " (`comentario`, `posts_id`, `usuarios_id`,  `multimedia`, `fecha_creacion`)" +
             " VALUES (?, ?, ?, ?, ?);");
     
             System.out.println("usuario");
@@ -633,15 +633,15 @@ public class DBController extends HttpServlet {
             stmt.setString(1, comentario);
             stmt.setInt(2, posts_id);
             stmt.setInt(3, (usuarios_id==null)?null:usuarios_id);
-            stmt.setInt(4, (multimedia_id==null)?null:multimedia_id);
+            stmt.setString(4, (multimedia==null)?"":multimedia);
             stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+            return "El cometario se ha registrado correctamente!";
         }
     }
 
-    // Crea un reto sin un archivo multimedia
+    // Crea un comentario sin un archivo multimedia
     public String postComentario(String comentario, Integer posts_id, Integer usuarios_id, Integer empresas_id, String fecha_creacion) throws SQLException{
         if(usuarios_id==0){
             // Crea un comentario como una empresa
@@ -678,7 +678,7 @@ public class DBController extends HttpServlet {
 
     //////////////// PUT ////////////////
 
-    public String putComentario(Integer id, String comentario, Integer multimedia_id) throws SQLException{
+    public String putComentario(Integer id, String comentario, String multimedia) throws SQLException{
         Comentario comentarioNew = new Comentario();
         Comentario comentarioOld = new Comentario();
         String SQL = "SELECT * FROM comentarios WHERE id='" + id + "'";
@@ -687,17 +687,17 @@ public class DBController extends HttpServlet {
         try {
             while(rs.next()){
                 comentarioOld.setComentario(rs.getString("comentario"));
-                comentarioOld.setMultimedia_id(rs.getInt("multimedia_id"));
+                comentarioOld.setMultimedia(rs.getString("multimedia"));
             }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
         }
 
         comentarioNew.setComentario((comentario==null)?comentarioOld.getComentario():comentario);
-        comentarioNew.setMultimedia_id((multimedia_id==null)?comentarioOld.getMultimedia_id():multimedia_id);
+        comentarioNew.setMultimedia((multimedia==null)?comentarioOld.getMultimedia():multimedia);
 
         PreparedStatement stmt=con.prepareStatement("UPDATE `comentarios`" + 
-        "SET `comentario` = '" + comentarioNew.getComentario() +  "', `multimedia_id` = '" + comentarioNew.getMultimedia_id() + 
+        "SET `comentario` = '" + comentarioNew.getComentario() +  "', `multimedia` = '" + comentarioNew.getMultimedia() + 
         "' WHERE `id` = " + id + ";");  
 
         stmt.executeUpdate();  
@@ -721,14 +721,277 @@ public class DBController extends HttpServlet {
 
     //////////////// GET ////////////////
 
+    public String getPosts() throws SQLException {
+        String SQL = "SELECT * FROM posts ";
+        ResultSet rs = stmt.executeQuery(SQL);
+        ArrayList<String> postsList = new ArrayList<String>();
+
+        try {
+            while(rs.next()){
+                    post.setId(rs.getInt("id"));
+                    post.setTitulo(rs.getString("titulo"));
+                    post.setDescripcion(rs.getString("descripcion"));
+                    post.setUsuario_id(rs.getInt("usuarios_id"));
+                    post.setEmpresa_id(rs.getInt("empresas_id"));
+                    post.setMultimedia(rs.getString("multimedia"));
+                    post.setFecha_creacion(rs.getString("fecha_creacion"));
+        
+                    postsList.add(gson.toJson(post));
+                }
+        } catch (Exception e) {
+            System.out.println("Error -> "+e);
+        }
+        return gson.toJson(postsList);
+    }
+
+    public String getPostId(Integer id) throws SQLException{
+        String SQL = "SELECT * FROM posts WHERE id='" + id + "'";
+        ResultSet rs = stmt.executeQuery(SQL);
+
+        try {
+            while(rs.next()){
+                post.setId(rs.getInt("id"));
+                post.setTitulo(rs.getString("titulo"));
+                post.setDescripcion(rs.getString("descripcion"));
+                post.setUsuario_id(rs.getInt("usuarios_id"));
+                post.setEmpresa_id(rs.getInt("empresas_id"));
+                post.setMultimedia(rs.getString("multimedia"));
+                post.setFecha_creacion(rs.getString("fecha_creacion"));
+                }
+        } catch (Exception e) {
+            System.out.println("Error -> "+e);
+        }
+        return gson.toJson(post);
+    }
+
 
     //////////////// POST ////////////////
+
+    // Crea un comentario con un archivo multimedia
+    public String postNewPost(String titulo, String descripcion, Integer usuarios_id, Integer empresas_id, String multimedia, String fecha_creacion) throws SQLException{
+        if(usuarios_id==0){
+            // Crea un comentario como una empresa
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
+            " (`titulo`, `descripcion`, `empresas_id`, `multimedia`, `fecha_creacion`)" +
+            " VALUES (?, ?, ?, ?, ?);");
+
+            stmt.setString(1, titulo);
+            stmt.setString(2, descripcion);
+            stmt.setInt(3, (empresas_id==null)?null:empresas_id);
+            stmt.setString(4, (multimedia==null)?"":multimedia);
+            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
+    
+            stmt.executeUpdate();  
+            return "El post se ha registrado correctamente!";
+        }else{
+            // Crea un comentario como un usuario
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
+            " (`titulo`, `descripcion`, `usuarios_id`, `multimedia`, `fecha_creacion`)" +
+            " VALUES (?, ?, ?, ?, ?);");
+    
+            System.out.println("usuario");
+            System.out.println(stmt);
+
+            
+            stmt.setString(1, titulo);
+            stmt.setString(2, descripcion);
+            stmt.setInt(3, (usuarios_id==null)?null:usuarios_id);
+            stmt.setString(4, (multimedia==null)?"":multimedia);
+            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
+    
+            stmt.executeUpdate();  
+            return "El post se ha registrado correctamente!";
+        }
+    }
+
+    // Crea un comentario sin un archivo multimedia
+    public String postNewPost(String titulo, String descripcion, Integer usuarios_id, Integer empresas_id, String fecha_creacion) throws SQLException{
+        if(usuarios_id==0){
+            // Crea un comentario como una empresa
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
+            " (`titulo`, `descripcion`, `empresas_id`, `fecha_creacion`)" +
+            " VALUES (?, ?, ?, ?);");
+
+            stmt.setString(1, titulo);
+            stmt.setString(2, descripcion);
+            stmt.setInt(3, (empresas_id==null)?null:empresas_id);
+            stmt.setString(4, (fecha_creacion==null)?"":fecha_creacion);
+    
+            stmt.executeUpdate();  
+            return "El post se ha registrado correctamente!";
+        }else{
+            // Crea un comentario como un usuario
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
+            " (`titulo`, `descripcion`, `usuarios_id`, `fecha_creacion`)" +
+            " VALUES (?, ?, ?, ?);");
+    
+            System.out.println("usuario");
+            System.out.println(stmt);
+
+            
+            stmt.setString(1, titulo);
+            stmt.setString(2, descripcion);
+            stmt.setInt(3, (usuarios_id==null)?null:usuarios_id);
+            stmt.setString(4, (fecha_creacion==null)?"":fecha_creacion);
+    
+            stmt.executeUpdate();  
+            return "El post se ha registrado correctamente!";
+        }
+    }
+
+    //////////////// PUT ////////////////
+
+    public String putPost(Integer id, String titulo, String descripcion, String multimedia) throws SQLException{
+        Post postNew = new Post();
+        Post postOld = new Post();
+        String SQL = "SELECT * FROM posts WHERE id='" + id + "'";
+        ResultSet rs = stmt.executeQuery(SQL);
+
+        try {
+            while(rs.next()){
+                postOld.setTitulo(rs.getString("titulo"));
+                postOld.setDescripcion(rs.getString("descripcion"));
+                postOld.setMultimedia(rs.getString("multimedia"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error -> "+e);
+        }
+
+        postNew.setTitulo((titulo==null)?postOld.getTitulo():titulo);
+        postNew.setDescripcion((descripcion==null)?postOld.getDescripcion():descripcion);
+        postNew.setMultimedia((multimedia==null)?postOld.getMultimedia():multimedia);
+
+        PreparedStatement stmt=con.prepareStatement("UPDATE `posts`" + 
+        "SET `titulo` = '" + postNew.getTitulo() +  "', `descripcion` = '" + postNew.getDescripcion() +  "', `multimedia` = '" + postNew.getMultimedia() + 
+        "' WHERE `id` = " + id + ";");  
+
+        stmt.executeUpdate();  
+        
+        return "Se ha modificado correctamente el post!";
+    }
+
+
+    //////////////// DELETE ////////////////
+
+    public String deletePost(Integer id) throws SQLException{
+        String SQL = "DELETE  FROM posts WHERE id='" + id + "'";
+        
+        stmt.executeUpdate(SQL);
+
+        return "El posts se ha eliminado correctamente!";
+    }
+
+
+    //////////////////////////////// UsuariosRetos ////////////////////////////////
+
+    //////////////// GET ////////////////
+
+    // Obtiene los UsuariosRetos
+    public String getURUsuarios() throws SQLException{
+        String SQL = "SELECT * FROM usuarios_has_retos";
+        ResultSet rs = stmt.executeQuery(SQL);
+        ArrayList<String> usresList = new ArrayList<String>();
+
+        try {
+            while(rs.next()){
+                usre.setUsuarios_id(rs.getInt("usuarios_id"));
+                usre.setRetos_id(rs.getInt("retos_id"));
+                usre.setMultimedia(rs.getString("multimedia"));
+
+                usresList.add(gson.toJson(usre));
+                }
+        } catch (Exception e) {
+            System.out.println("Error -> "+e);
+        }
+        return gson.toJson(usresList);
+    }
+
+    // Obtiene los retos que tiene un usuario
+    public String getURbyUsuarios(Integer usuarios_id) throws SQLException{
+        String SQL = "SELECT * FROM usuarios_has_retos WHERE usuarios_id = " + usuarios_id;
+        ResultSet rs = stmt.executeQuery(SQL);
+        ArrayList<String> usresList = new ArrayList<String>();
+
+        try {
+            while(rs.next()){
+                usre.setUsuarios_id(rs.getInt("usuarios_id"));
+                usre.setRetos_id(rs.getInt("retos_id"));
+                usre.setMultimedia(rs.getString("multimedia"));
+
+                usresList.add(gson.toJson(usre));
+                }
+        } catch (Exception e) {
+            System.out.println("Error -> "+e);
+        }
+        return gson.toJson(usresList);
+    }
+
+    // Obtiene los usuarios que tiene un reto
+    public String getURbyReto(Integer retos_id) throws SQLException{
+        String SQL = "SELECT * FROM usuarios_has_retos WHERE retos_id = " + retos_id;
+        ResultSet rs = stmt.executeQuery(SQL);
+        ArrayList<String> usresList = new ArrayList<String>();
+
+        try {
+            while(rs.next()){
+                usre.setUsuarios_id(rs.getInt("usuarios_id"));
+                usre.setRetos_id(rs.getInt("retos_id"));
+                usre.setMultimedia(rs.getString("multimedia"));
+
+                usresList.add(gson.toJson(usre));
+                }
+        } catch (Exception e) {
+            System.out.println("Error -> "+e);
+        }
+        return gson.toJson(usresList);
+    }
+
+    //////////////// POST ////////////////
+
+    public String postUR(Integer usuarios_id, Integer retos_id, String multimedia) throws SQLException{
+        PreparedStatement stmt = con.prepareStatement("INSERT INTO `usuarios_has_retos`" +
+        " (`usuarios_id`, `retos_id`, `multimedia`)" +
+        " VALUES (?, ?, ?);");
+
+        stmt.setInt(1, usuarios_id);
+        stmt.setInt(2, retos_id);
+        stmt.setString(3, multimedia);
+
+        stmt.executeUpdate();  
+        return "El Usuario en el reto se ha registrado correctamente!";
+    }
 
 
     //////////////// PUT ////////////////
 
+    public String putUR(Integer usuarios_id, Integer retos_id, String multimedia) throws SQLException{
+        UsuariosRetos usreNew = new UsuariosRetos();
+        UsuariosRetos usreOld = new UsuariosRetos();
+        String SQL = "SELECT * FROM usuarios_has_retos WHERE usuarios_id=" + usuarios_id + " AND retos_id = " + retos_id;
+        ResultSet rs = stmt.executeQuery(SQL);
+
+        try {
+            while(rs.next()){
+                usreOld.setMultimedia(rs.getString("multimedia"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error -> "+e);
+        }
+
+        usreNew.setMultimedia((multimedia==null)?usreOld.getMultimedia():multimedia);
+
+        PreparedStatement stmt=con.prepareStatement("UPDATE `usuarios_has_retos`" + 
+        "SET `multimedia` = '" + usreNew.getMultimedia() + 
+        "' WHERE usuarios_id=" + usuarios_id + " AND retos_id = " + retos_id + ";");  
+
+        stmt.executeUpdate();  
+        
+        return "Se ha modificado correctamente el usuario reto!";
+    }
+
 
     //////////////// DELETE ////////////////
+
 
 
     //////////////////////////////// EXTRAS ////////////////////////////////

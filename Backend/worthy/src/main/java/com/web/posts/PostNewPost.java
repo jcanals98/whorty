@@ -1,4 +1,4 @@
-package com.web.retos;
+package com.web.posts;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -6,7 +6,7 @@ import java.io.*;
 import java.sql.*;
 import com.web.DBController;
 
-public class PostReto extends HttpServlet {
+public class PostNewPost extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DBController db = new DBController();
         PrintWriter out = response.getWriter();
@@ -18,21 +18,19 @@ public class PostReto extends HttpServlet {
             out.println("<html>");
             out.println("<body>");
 
-            Integer id_creador = Integer.parseInt(request.getParameter("id_creador"));
-            String nombre = request.getParameter("nombre");
+            String titulo = request.getParameter("titulo");
             String descripcion = request.getParameter("descripcion");
-            String tecnologias = request.getParameter("tecnologias");
-            Integer participantesMax = Integer.parseInt(request.getParameter("participantesMax"));
-            Integer participantes = Integer.parseInt(request.getParameter("participantes"));
-            Integer nivell = Integer.parseInt(request.getParameter("nivell"));
+            Integer usuarios_id = (request.getParameter("usuarios_id").equals(""))?0:Integer.parseInt(request.getParameter("usuarios_id"));
+            Integer empresas_id = (request.getParameter("empresas_id").equals(""))?0:Integer.parseInt(request.getParameter("empresas_id"));
             String fecha_limite = request.getParameter("fecha_limite");
 
+
             // Comprueba si el reto requiere de un archivo y llama la funcion que tiene archivo o la que no
-            if(!request.getParameter("multimedia").equals("")){
+            if(!request.getParameter("multimedia_id").equals("")){
                 String multimedia = request.getParameter("multimedia");
-                respuestaJson = db.postReto(id_creador, nombre, descripcion, tecnologias, participantesMax, participantes, multimedia, nivell, fecha_limite);
+                respuestaJson = db.postNewPost(titulo, descripcion, usuarios_id, empresas_id, multimedia, fecha_limite);
             }else{
-                respuestaJson = db.postReto(id_creador, nombre, descripcion, tecnologias, participantesMax, participantes, nivell, fecha_limite);
+                respuestaJson = db.postNewPost(titulo, descripcion, usuarios_id, empresas_id, fecha_limite);
             }
             
             out.println(db.respuestaServidor(response.getStatus()));

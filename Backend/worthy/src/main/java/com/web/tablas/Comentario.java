@@ -7,7 +7,7 @@ public class Comentario {
     public Integer posts_id;
     public Integer usuario_id;
     public Integer empresa_id;
-    public Integer multimedia_id;
+    public String multimedia;
     public String fecha_creacion;
 
     public Integer getId() {
@@ -50,12 +50,12 @@ public class Comentario {
         this.empresa_id = empresa_id;
     }
 
-    public Integer getMultimedia_id() {
-        return this.multimedia_id;
+    public String getMultimedia() {
+        return this.multimedia;
     }
 
-    public void setMultimedia_id(Integer multimedia_id) {
-        this.multimedia_id = multimedia_id;
+    public void setMultimedia(String multimedia) {
+        this.multimedia = multimedia;
     }
 
     public String getFecha_creacion() {

@@ -9,7 +9,7 @@ public class Reto {
     public String tecnologias;
     public Integer participantesMax;
     public Integer participantes;
-    public Integer multimedia_id;
+    public String multimedia;
     public Integer nivel;
     public String fecha_limite;
 
@@ -70,12 +70,12 @@ public class Reto {
         this.participantes = participantes;
     }
 
-    public Integer getMultimedia_id() {
-        return this.multimedia_id;
+    public String getMultimedia() {
+        return this.multimedia;
     }
 
-    public void setMultimedia_id(Integer multimedia_id) {
-        this.multimedia_id = multimedia_id;
+    public void setMultimedia(String multimedia) {
+        this.multimedia = multimedia;
     }
 
     public Integer getNivel() {

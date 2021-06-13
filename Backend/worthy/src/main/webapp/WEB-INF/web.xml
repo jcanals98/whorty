@@ -261,20 +261,127 @@
 
   <!--...............DELETE...............-->
 
+  <servlet>
+    <servlet-name>DeleteComentario</servlet-name>
+    <servlet-class>com.web.comentarios.DeleteComentario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteComentario</servlet-name>
+    <url-pattern>/deleteComentario</url-pattern>
+  </servlet-mapping>
 
   <!--.........................POST / db.........................-->
 
   <!--...............GET...............-->
 
+  <servlet>
+    <servlet-name>GetPosts</servlet-name>
+    <servlet-class>com.web.posts.GetPosts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPosts</servlet-name>
+    <url-pattern>/getPosts</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>GetPostId</servlet-name>
+    <servlet-class>com.web.posts.GetPostId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPostId</servlet-name>
+    <url-pattern>/getPostId</url-pattern>
+  </servlet-mapping>
 
   <!--...............POST...............-->
+
+  <servlet>
+    <servlet-name>PostNewPost</servlet-name>
+    <servlet-class>com.web.posts.PostNewPost</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostNewPost</servlet-name>
+    <url-pattern>/postNewPost</url-pattern>
+  </servlet-mapping>
+
+  <!--...............PUT...............-->
+
+  <servlet>
+    <servlet-name>PutPost</servlet-name>
+    <servlet-class>com.web.posts.PutPost</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PutPost</servlet-name>
+    <url-pattern>/putPost</url-pattern>
+  </servlet-mapping>
+
+  <!--...............DELETE...............-->
+
+  <servlet>
+    <servlet-name>DeletePost</servlet-name>
+    <servlet-class>com.web.posts.DeletePost</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeletePost</servlet-name>
+    <url-pattern>/deletePost</url-pattern>
+  </servlet-mapping>
+
+
+  <!--.........................USUARIOS RETOS.........................-->
+
+  <!--...............GET...............-->
+
+  <servlet>
+    <servlet-name>GetURUsuarios</servlet-name>
+    <servlet-class>com.web.usuariosRetos.GetURUsuarios</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetURUsuarios</servlet-name>
+    <url-pattern>/getURUsuarios</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetURbyUsuario</servlet-name>
+    <servlet-class>com.web.usuariosRetos.GetURbyUsuario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetURbyUsuario</servlet-name>
+    <url-pattern>/getURbyUsuario</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetURbyReto</servlet-name>
+    <servlet-class>com.web.usuariosRetos.GetURbyReto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetURbyReto</servlet-name>
+    <url-pattern>/getURbyReto</url-pattern>
+  </servlet-mapping>
+
+
+  <!--...............POST...............-->
+
+  <servlet>
+    <servlet-name>PostUR</servlet-name>
+    <servlet-class>com.web.usuariosRetos.PostUR</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostUR</servlet-name>
+    <url-pattern>/postUR</url-pattern>
+  </servlet-mapping>
 
 
   <!--...............PUT...............-->
 
+  <servlet>
+    <servlet-name>PutUR</servlet-name>
+    <servlet-class>com.web.usuariosRetos.PutUR</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PutUR</servlet-name>
+    <url-pattern>/putUR</url-pattern>
+  </servlet-mapping>
+
 
   <!--...............DELETE...............-->
-
-
 
 </web-app>

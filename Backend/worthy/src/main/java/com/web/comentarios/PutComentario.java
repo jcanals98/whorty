@@ -21,9 +21,9 @@ public class PutComentario extends HttpServlet {
 
             Integer id = Integer.parseInt(request.getParameter("id"));
             String comentario = request.getParameter("comentario");
-            Integer multimedia_id = Integer.parseInt(request.getParameter("multimedia_id"));
+            String multimedia = request.getParameter("multimedia");
 
-            String respuestaJson = db.putComentario(id, comentario, multimedia_id);
+            String respuestaJson = db.putComentario(id, comentario, multimedia);
             
             out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);

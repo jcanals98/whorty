@@ -1,4 +1,4 @@
-package com.web.log;
+package com.web.posts;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -8,7 +8,7 @@ import java.sql.*;
 
 import com.web.DBController;
 
-public class DeleteUsuarioId extends HttpServlet {
+public class GetPostId extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DBController db = new DBController();
         PrintWriter out = response.getWriter();
@@ -20,7 +20,7 @@ public class DeleteUsuarioId extends HttpServlet {
             out.println("<body>");
 
             Integer id = Integer.parseInt(request.getParameter("id"));
-            String respuestaJson = db.deleteUsuarioId(id);
+            String respuestaJson = db.getPostId(id);
             
             out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);

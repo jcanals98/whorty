@@ -26,13 +26,13 @@ public class PutReto extends HttpServlet {
             String tecnologias = request.getParameter("tecnologias");
             Integer participantesMax = Integer.parseInt(request.getParameter("participantesMax"));
             Integer participantes = Integer.parseInt(request.getParameter("participantes"));
-            Integer multimedia_id = Integer.parseInt(request.getParameter("multimedia_id"));
+            String multimedia = request.getParameter("multimedia");
             Integer nivell = Integer.parseInt(request.getParameter("nivell"));
             String fecha_limite = request.getParameter("fecha_limite");
 
             System.out.println("ola"+fecha_limite);
 
-            String respuestaJson = db.putReto(id, id_creador, nombre, descripcion, tecnologias, participantesMax, participantes, multimedia_id, nivell, fecha_limite);
+            String respuestaJson = db.putReto(id, id_creador, nombre, descripcion, tecnologias, participantesMax, participantes, multimedia, nivell, fecha_limite);
             
             out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
