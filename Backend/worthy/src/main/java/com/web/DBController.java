@@ -253,7 +253,7 @@ public class DBController extends HttpServlet {
         empresaNew.setLatlng((latlng==null)?empresaOld.getLatlng():latlng);
 
         PreparedStatement stmt=con.prepareStatement("UPDATE `empresas`" + 
-        "SET `nombre` = '" + empresaNew.getNombre() + "', `email` = '" + empresaNew.getNombre() + "', `password` = '" + empresaNew.getPassword() + "'," + 
+        "SET `nombre` = '" + empresaNew.getNombre() + "', `email` = '" + empresaNew.getEmail() + "', `password` = '" + empresaNew.getPassword() + "'," + 
         " `identificacionFiscal` = '" + empresaNew.getIdentificacionFiscal() + "',`descripcion` = '" + empresaNew.getDescripcion() + "',`ubicacion` = '" + empresaNew.getUbicacion() + "', " +
         " `latlng` = '" + empresaNew.getLatlng() + "' " +
         "WHERE (`id` = '" + id + "');");  
