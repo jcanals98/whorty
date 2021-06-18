@@ -19,10 +19,6 @@ public class LoginEmpresa extends HttpServlet {
         
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
             String email = request.getParameter("email");
             String password = request.getParameter("password");
 
@@ -33,13 +29,9 @@ public class LoginEmpresa extends HttpServlet {
                 if(respuestaJson.length() <= 5){
                     out.println("El email y/o password son erroneos");
                 }else{
-                    out.println(db.respuestaServidor(response.getStatus()));
                     out.println(respuestaJson);
                 }
             }
-            
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

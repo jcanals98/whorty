@@ -19,17 +19,7 @@ public class GetURUsuarios extends HttpServlet {
 
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
-            String respuestaJson = db.getURUsuarios();
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getURUsuarios());
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

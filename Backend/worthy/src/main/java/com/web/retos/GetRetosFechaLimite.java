@@ -16,17 +16,8 @@ public class GetRetosFechaLimite extends HttpServlet{
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             String fechaLimite = request.getParameter("fechaLimite");
-            String respuestaJson = db.getRetosFechaLimite(fechaLimite);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getRetosFechaLimite(fechaLimite));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

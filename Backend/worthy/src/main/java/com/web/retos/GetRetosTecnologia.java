@@ -15,18 +15,8 @@ public class GetRetosTecnologia extends HttpServlet{
     
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
             String tecnologia = request.getParameter("tecnologia");
-            String respuestaJson = db.getRetosTecnologia(tecnologia);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getRetosTecnologia(tecnologia));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

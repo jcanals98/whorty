@@ -16,17 +16,8 @@ public class GetRetosNivel extends HttpServlet{
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             Integer nivel = Integer.parseInt(request.getParameter("nivel"));
-            String respuestaJson = db.getRetosNivel(nivel);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getRetosNivel(nivel));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

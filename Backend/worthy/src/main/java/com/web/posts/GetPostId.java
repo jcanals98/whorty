@@ -15,18 +15,8 @@ public class GetPostId extends HttpServlet {
     
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
             Integer id = Integer.parseInt(request.getParameter("id"));
-            String respuestaJson = db.getPostId(id);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getPostId(id));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

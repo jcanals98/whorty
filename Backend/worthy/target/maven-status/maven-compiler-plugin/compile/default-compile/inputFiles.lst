@@ -10,6 +10,7 @@ D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\tablas\Reto.jav
 D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\comentarios\GetComentariosUsuario.java
 D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\posts\GetPostId.java
 D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\log\LoginUsuario.java
+D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\CORSFilter.java
 D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\retos\GetRetosNombre.java
 D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\usuariosRetos\GetURUsuarios.java
 D:\Projectes\proyectoWhorty\Backend\worthy\src\main\java\com\web\comentarios\GetComentariosPost.java

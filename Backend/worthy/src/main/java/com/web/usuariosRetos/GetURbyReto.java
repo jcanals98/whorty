@@ -19,18 +19,8 @@ public class GetURbyReto extends HttpServlet {
 
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
             Integer retos_id = Integer.parseInt(request.getParameter("retos_id"));
-            String respuestaJson = db.getURbyReto(retos_id);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getURbyReto(retos_id));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

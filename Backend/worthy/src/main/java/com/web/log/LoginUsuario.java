@@ -18,10 +18,6 @@ public class LoginUsuario extends HttpServlet {
         
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
@@ -30,15 +26,11 @@ public class LoginUsuario extends HttpServlet {
             }else{
                 String respuestaJson = db.loginUsuario(username, password);
                 if(respuestaJson.length() <= 5){
-                    out.println("El username y/o password son erroneos");
+                    out.println("El email y/o password son erroneos");
                 }else{
-                    out.println(db.respuestaServidor(response.getStatus()));
                     out.println(respuestaJson);
                 }
             }
-            
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

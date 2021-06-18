@@ -12,24 +12,28 @@ public class GetRetoId extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DBController db = new DBController();
         PrintWriter out = response.getWriter();
+        setAccessControlHeaders(response);
+        response.setHeader("Content-Type", "application/json; charset=UTF-8");
     
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             Integer id = Integer.parseInt(request.getParameter("id"));
-            String respuestaJson = db.getRetoId(id);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getRetoId(id));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());
         }
+    }
+    // for Preflight
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
+        resp.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    private void setAccessControlHeaders(HttpServletResponse resp) {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "GET");
     }
 }

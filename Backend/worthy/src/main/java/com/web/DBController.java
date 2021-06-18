@@ -88,6 +88,10 @@ public class DBController extends HttpServlet {
         "(`username`, `password`, `nombre`, `apellidos`, `dni`, `email`, `telefono`, `ubicacion`)" +
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?)");  
 
+        String a="{\"error\": true}";
+        
+        try {
+            
         stmt.setString(1, (username==null)?"":username);
         stmt.setString(2, (password==null)?"":password);
         stmt.setString(3, (nombre==null)?"":nombre);
@@ -98,7 +102,13 @@ public class DBController extends HttpServlet {
         stmt.setString(8, (ubicacion==null)?"":ubicacion);
 
         stmt.executeUpdate();  
-        return "El usuario se ha creado correctamente!";
+        a = "{\"username\" : \"" + username + "\", \"password\" : \"" + password + "\", \"nombre\" : \"" + nombre + "\", \"apellidos\" : \"" + apellidos + 
+        "\", \"dni\" : \"" + dni +  "\", \"email\" : \"" + email +  "\", \"telefono\" : \"" + telefono +"\", \"ubicacion\" : \"" + ubicacion +"\"}";
+            
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+        return a;
     }
 
     //////////////// PUT ////////////////
@@ -280,10 +290,11 @@ public class DBController extends HttpServlet {
     public String getRetos() throws SQLException {
         String SQL = "SELECT * FROM retos ";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> retosList = new ArrayList<String>();
+        ArrayList<Reto> retosList = new ArrayList<Reto>();
 
         try {
             while(rs.next()){
+                    reto = new Reto();
                     reto.setId(rs.getInt("id"));
                     reto.setId_Creador(rs.getInt("id_Creador"));
                     reto.setNombre(rs.getString("nombre"));
@@ -295,7 +306,7 @@ public class DBController extends HttpServlet {
                     reto.setNivel(rs.getInt("nivel"));
                     reto.setFecha_limite(rs.getString("fecha_limite"));
         
-                    retosList.add(gson.toJson(reto));
+                    retosList.add(reto);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -329,10 +340,11 @@ public class DBController extends HttpServlet {
     public String getRetosNivel(Integer nivel) throws SQLException{
         String SQL = "SELECT * FROM retos WHERE nivel='" + nivel + "'";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> retosList = new ArrayList<String>();
+        ArrayList<Reto> retosList = new ArrayList<Reto>();
 
         try {
             while(rs.next()){
+                reto = new Reto();
                 reto.setId(rs.getInt("id"));
                 reto.setId_Creador(rs.getInt("id_Creador"));
                 reto.setNombre(rs.getString("nombre"));
@@ -344,7 +356,7 @@ public class DBController extends HttpServlet {
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
-                retosList.add(gson.toJson(reto));
+                retosList.add(reto);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -355,10 +367,11 @@ public class DBController extends HttpServlet {
     public String getRetosTecnologia(String tecnologia) throws SQLException{
         String SQL = "SELECT * FROM retos WHERE tecnologias='" + tecnologia + "'";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> retosList = new ArrayList<String>();
+        ArrayList<Reto> retosList = new ArrayList<Reto>();
 
         try {
             while(rs.next()){
+                reto = new Reto();
                 reto.setId(rs.getInt("id"));
                 reto.setId_Creador(rs.getInt("id_Creador"));
                 reto.setNombre(rs.getString("nombre"));
@@ -370,7 +383,7 @@ public class DBController extends HttpServlet {
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
-                retosList.add(gson.toJson(reto));
+                retosList.add(reto);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -381,10 +394,11 @@ public class DBController extends HttpServlet {
     public String getRetosNombre(String nombre) throws SQLException{
         String SQL = "SELECT * FROM retos WHERE nombre like '%" + nombre + "%' ORDER BY nombre Asc";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> retosList = new ArrayList<String>();
+        ArrayList<Reto> retosList = new ArrayList<Reto>();
 
         try {
             while(rs.next()){
+                reto = new Reto();
                 reto.setId(rs.getInt("id"));
                 reto.setId_Creador(rs.getInt("id_Creador"));
                 reto.setNombre(rs.getString("nombre"));
@@ -396,7 +410,7 @@ public class DBController extends HttpServlet {
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
-                retosList.add(gson.toJson(reto));
+                retosList.add(reto);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -408,10 +422,11 @@ public class DBController extends HttpServlet {
         DateTimeFormatter fechaActual = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         String SQL = "SELECT * FROM retos WHERE fecha_limite BETWEEN '" + fechaActual.format(LocalDateTime.now()) + "' AND '" +  fechaLimite + "'";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> retosList = new ArrayList<String>();
+        ArrayList<Reto> retosList = new ArrayList<Reto>();
         
         try {
             while(rs.next()){
+                reto = new Reto();
                 reto.setId(rs.getInt("id"));
                 reto.setId_Creador(rs.getInt("id_Creador"));
                 reto.setNombre(rs.getString("nombre"));
@@ -423,7 +438,7 @@ public class DBController extends HttpServlet {
                 reto.setNivel(rs.getInt("nivel"));
                 reto.setFecha_limite(rs.getString("fecha_limite"));
                 
-                retosList.add(gson.toJson(reto));
+                retosList.add(reto);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -537,10 +552,11 @@ public class DBController extends HttpServlet {
     public String getComentariosPost(Integer id) throws SQLException{
         String SQL = "SELECT * FROM comentarios WHERE posts_id='" + id + "'";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> comentariosList = new ArrayList<String>();
+        ArrayList<Comentario> comentariosList = new ArrayList<Comentario>();
 
         try {
             while(rs.next()){
+                comentario = new Comentario();
                 comentario.setId(rs.getInt("id"));
                 comentario.setComentario(rs.getString("comentario"));
                 comentario.setPosts_id(rs.getInt("posts_id"));
@@ -549,7 +565,7 @@ public class DBController extends HttpServlet {
                 comentario.setMultimedia(rs.getString("multimedia"));
                 comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
-                comentariosList.add(gson.toJson(comentario));
+                comentariosList.add(comentario);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -560,10 +576,11 @@ public class DBController extends HttpServlet {
     public String getComentariosUsuario(Integer id) throws SQLException{
         String SQL = "SELECT * FROM comentarios WHERE usuarios_id='" + id + "'";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> comentariosList = new ArrayList<String>();
+        ArrayList<Comentario> comentariosList = new ArrayList<Comentario>();
 
         try {
             while(rs.next()){
+                comentario = new Comentario();
                 comentario.setId(rs.getInt("id"));
                 comentario.setComentario(rs.getString("comentario"));
                 comentario.setPosts_id(rs.getInt("posts_id"));
@@ -571,7 +588,7 @@ public class DBController extends HttpServlet {
                 comentario.setMultimedia(rs.getString("multimedia"));
                 comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
-                comentariosList.add(gson.toJson(comentario));
+                comentariosList.add(comentario);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -582,10 +599,11 @@ public class DBController extends HttpServlet {
     public String getComentariosEmpresa(Integer id) throws SQLException{
         String SQL = "SELECT * FROM comentarios WHERE empresas_id='" + id + "'";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> comentariosList = new ArrayList<String>();
+        ArrayList<Comentario> comentariosList = new ArrayList<Comentario>();
 
         try {
             while(rs.next()){
+                comentario = new Comentario();
                 comentario.setId(rs.getInt("id"));
                 comentario.setComentario(rs.getString("comentario"));
                 comentario.setPosts_id(rs.getInt("posts_id"));
@@ -593,7 +611,7 @@ public class DBController extends HttpServlet {
                 comentario.setMultimedia(rs.getString("multimedia"));
                 comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
-                comentariosList.add(gson.toJson(comentario));
+                comentariosList.add(comentario);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -724,19 +742,20 @@ public class DBController extends HttpServlet {
     public String getPosts() throws SQLException {
         String SQL = "SELECT * FROM posts ";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> postsList = new ArrayList<String>();
+        ArrayList<Post> postsList = new ArrayList<Post>();
 
         try {
             while(rs.next()){
-                    post.setId(rs.getInt("id"));
-                    post.setTitulo(rs.getString("titulo"));
-                    post.setDescripcion(rs.getString("descripcion"));
-                    post.setUsuario_id(rs.getInt("usuarios_id"));
-                    post.setEmpresa_id(rs.getInt("empresas_id"));
-                    post.setMultimedia(rs.getString("multimedia"));
-                    post.setFecha_creacion(rs.getString("fecha_creacion"));
-        
-                    postsList.add(gson.toJson(post));
+                post = new Post();
+                post.setId(rs.getInt("id"));
+                post.setTitulo(rs.getString("titulo"));
+                post.setDescripcion(rs.getString("descripcion"));
+                post.setUsuario_id(rs.getInt("usuarios_id"));
+                post.setEmpresa_id(rs.getInt("empresas_id"));
+                post.setMultimedia(rs.getString("multimedia"));
+                post.setFecha_creacion(rs.getString("fecha_creacion"));
+    
+                    postsList.add(post);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -890,15 +909,16 @@ public class DBController extends HttpServlet {
     public String getURUsuarios() throws SQLException{
         String SQL = "SELECT * FROM usuarios_has_retos";
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> usresList = new ArrayList<String>();
+        ArrayList<UsuariosRetos> usresList = new ArrayList<UsuariosRetos>();
 
         try {
             while(rs.next()){
+                usre = new UsuariosRetos();
                 usre.setUsuarios_id(rs.getInt("usuarios_id"));
                 usre.setRetos_id(rs.getInt("retos_id"));
                 usre.setMultimedia(rs.getString("multimedia"));
 
-                usresList.add(gson.toJson(usre));
+                usresList.add(usre);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -910,15 +930,16 @@ public class DBController extends HttpServlet {
     public String getURbyUsuarios(Integer usuarios_id) throws SQLException{
         String SQL = "SELECT * FROM usuarios_has_retos WHERE usuarios_id = " + usuarios_id;
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> usresList = new ArrayList<String>();
+        ArrayList<UsuariosRetos> usresList = new ArrayList<UsuariosRetos>();
 
         try {
             while(rs.next()){
+                usre = new UsuariosRetos();
                 usre.setUsuarios_id(rs.getInt("usuarios_id"));
                 usre.setRetos_id(rs.getInt("retos_id"));
                 usre.setMultimedia(rs.getString("multimedia"));
 
-                usresList.add(gson.toJson(usre));
+                usresList.add(usre);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -930,15 +951,16 @@ public class DBController extends HttpServlet {
     public String getURbyReto(Integer retos_id) throws SQLException{
         String SQL = "SELECT * FROM usuarios_has_retos WHERE retos_id = " + retos_id;
         ResultSet rs = stmt.executeQuery(SQL);
-        ArrayList<String> usresList = new ArrayList<String>();
+        ArrayList<UsuariosRetos> usresList = new ArrayList<UsuariosRetos>();
 
         try {
             while(rs.next()){
+                usre = new UsuariosRetos();
                 usre.setUsuarios_id(rs.getInt("usuarios_id"));
                 usre.setRetos_id(rs.getInt("retos_id"));
                 usre.setMultimedia(rs.getString("multimedia"));
 
-                usresList.add(gson.toJson(usre));
+                usresList.add(usre);
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -953,12 +975,22 @@ public class DBController extends HttpServlet {
         " (`usuarios_id`, `retos_id`, `multimedia`)" +
         " VALUES (?, ?, ?);");
 
-        stmt.setInt(1, usuarios_id);
-        stmt.setInt(2, retos_id);
-        stmt.setString(3, multimedia);
+        String a="{\"error\": true}";
 
-        stmt.executeUpdate();  
-        return "El Usuario en el reto se ha registrado correctamente!";
+        try {
+            stmt.setInt(1, usuarios_id);
+            stmt.setInt(2, retos_id);
+            stmt.setString(3, multimedia);
+
+            stmt.executeUpdate();
+
+             a= "{\"usuarios_id\": "+ usuarios_id+ ", \"retos_id\": "+retos_id+", \"multimedia\": "+multimedia+"}";
+
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+
+        return a;
     }
 
 

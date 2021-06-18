@@ -15,18 +15,8 @@ public class GetRetosNombre extends HttpServlet{
     
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
             String nombre = request.getParameter("nombre");
-            String respuestaJson = db.getRetosNombre(nombre);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getRetosNombre(nombre));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

@@ -86,8 +86,8 @@ public class Usuario {
     
     @Override    
     public String toString() {    
-        return "\" Usuario [id = "+ id + ", username = " + username + ", password = " + password + ", nombre = " + nombre + ", apellidos = " + apellidos + 
-        ", dni = " + dni +  ", email = " + email +  ", telefono = " + telefono +", ubicacion = " + ubicacion +"]";    
+        return "{\"id\" = "+ id + ", \"username\" = " + username + ", \"password\" = " + password + ", \"nombre\" = " + nombre + ", \"apellidos\" = " + apellidos + 
+        ", \"dni\" = " + dni +  ", \"email\" = " + email +  ", \"telefono\" = " + telefono +", \"ubicacion\" = " + ubicacion +"}";    
     }  
 
 }

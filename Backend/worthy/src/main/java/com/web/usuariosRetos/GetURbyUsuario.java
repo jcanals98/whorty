@@ -19,18 +19,8 @@ public class GetURbyUsuario extends HttpServlet {
 
         try{
             db.iniciar();  
-
-            out.println("<html>");
-            out.println("<body>");
-
             Integer usuarios_id = Integer.parseInt(request.getParameter("usuarios_id"));
-            String respuestaJson = db.getURbyUsuarios(usuarios_id);
-            
-            out.println(db.respuestaServidor(response.getStatus()));
-            out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
+            out.println(db.getURbyUsuarios(usuarios_id));
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

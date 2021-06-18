@@ -16,9 +16,6 @@ public class RegistroUsuario extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String nombre = request.getParameter("nombre");
@@ -30,11 +27,9 @@ public class RegistroUsuario extends HttpServlet {
 
             String respuestaJson = db.registroUsuario(username, password, nombre, apellidos, dni, email, telefono, ubicacion);
             
-            out.println(db.respuestaServidor(response.getStatus()));
+            //out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
         
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());
