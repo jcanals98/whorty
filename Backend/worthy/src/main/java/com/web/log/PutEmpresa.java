@@ -17,9 +17,6 @@ public class PutEmpresa extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             Integer id = Integer.parseInt(request.getParameter("id"));
             String nombre = request.getParameter("nombre");
             String email = request.getParameter("email");
@@ -31,11 +28,7 @@ public class PutEmpresa extends HttpServlet {
 
             String respuestaJson = db.putEmpresa(id, nombre, email, password, identificacionFiscal, descripcion, ubicacion, latlng);
             
-            out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
-        
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

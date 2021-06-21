@@ -20,9 +20,6 @@ public class RegistroEmpresa extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             String nombre = request.getParameter("nombre");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -33,11 +30,7 @@ public class RegistroEmpresa extends HttpServlet {
 
             String respuestaJson = db.registroEmpresa(nombre, email, password, identificacionFiscal, descripcion, ubicacion, latlng);
             
-            out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

@@ -11,7 +11,6 @@ public class Reto {
     public Integer participantes;
     public String multimedia;
     public Integer nivel;
-    public String fecha_limite;
 
 
     public Integer getId() {
@@ -86,13 +85,6 @@ public class Reto {
         this.nivel = nivel;
     }
 
-    public String getFecha_limite() {
-        return this.fecha_limite;
-    }
-
-    public void setFecha_limite(String fecha_limite) {
-        this.fecha_limite = fecha_limite;
-    }
 
 
 }

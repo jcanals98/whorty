@@ -16,17 +16,10 @@ public class DeleteUsuarioId extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             Integer id = Integer.parseInt(request.getParameter("id"));
             String respuestaJson = db.deleteUsuarioId(id);
             
-            out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

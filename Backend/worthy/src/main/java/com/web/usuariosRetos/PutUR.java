@@ -17,20 +17,13 @@ public class PutUR extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             Integer usuarios_id = Integer.parseInt(request.getParameter("usuarios_id"));
             Integer retos_id = Integer.parseInt(request.getParameter("retos_id"));
             String multimedia = request.getParameter("multimedia");
 
             String respuestaJson = db.putUR(usuarios_id, retos_id, multimedia);
             
-            out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
-            
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

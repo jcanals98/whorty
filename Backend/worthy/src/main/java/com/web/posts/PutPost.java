@@ -16,9 +16,6 @@ public class PutPost extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             Integer id = Integer.parseInt(request.getParameter("id"));
             String titulo = request.getParameter("titulo");
             String descripcion = request.getParameter("descripcion");
@@ -26,11 +23,8 @@ public class PutPost extends HttpServlet {
             
             String respuestaJson = db.putPost(id, titulo, descripcion, multimedia);
             
-            out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
         
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

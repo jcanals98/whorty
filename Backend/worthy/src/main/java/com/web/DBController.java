@@ -25,6 +25,7 @@ public class DBController extends HttpServlet {
     Post post = new Post();
     UsuariosRetos usre = new UsuariosRetos();
     Gson gson = new Gson();
+    String retorno="{\"error\": true}";
 
     public void iniciar() throws SQLException{
         con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -87,8 +88,6 @@ public class DBController extends HttpServlet {
         PreparedStatement stmt=con.prepareStatement("INSERT INTO `usuarios` " +
         "(`username`, `password`, `nombre`, `apellidos`, `dni`, `email`, `telefono`, `ubicacion`)" +
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?)");  
-
-        String a="{\"error\": true}";
         
         try {
             
@@ -102,13 +101,13 @@ public class DBController extends HttpServlet {
         stmt.setString(8, (ubicacion==null)?"":ubicacion);
 
         stmt.executeUpdate();  
-        a = "{\"username\" : \"" + username + "\", \"password\" : \"" + password + "\", \"nombre\" : \"" + nombre + "\", \"apellidos\" : \"" + apellidos + 
+        retorno = "{\"username\" : \"" + username + "\", \"password\" : \"" + password + "\", \"nombre\" : \"" + nombre + "\", \"apellidos\" : \"" + apellidos + 
         "\", \"dni\" : \"" + dni +  "\", \"email\" : \"" + email +  "\", \"telefono\" : \"" + telefono +"\", \"ubicacion\" : \"" + ubicacion +"\"}";
             
         } catch (Exception e) {
             //TODO: handle exception
         }
-        return a;
+        return retorno;
     }
 
     //////////////// PUT ////////////////
@@ -151,8 +150,10 @@ public class DBController extends HttpServlet {
         "WHERE (`id` = '" + id + "');");  
 
         stmt.executeUpdate();  
-        
-        return "Se ha modificado correctamente el usuario!";
+
+        retorno= "{\"id\": "+ id+ ",\"username\": "+ username+ ", \"password\": "+password+", \"nombre\": "+nombre+", \"apellidos\": "+apellidos+", \"dni\": "+dni+", \"telefono\": "+telefono+", \"ubicacion\": "+ubicacion+"}";
+
+        return retorno;
     }
 
     //////////////// DELETE ////////////////
@@ -162,8 +163,11 @@ public class DBController extends HttpServlet {
         
         stmt.executeUpdate(SQL);
 
-        return "El usuario se ha eliminado correctamente!";
+        retorno= "{\"id\": "+ id+ "}";
+
+        return retorno;
     }
+
 
     //////////////////////////////// Empresa ////////////////////////////////
 
@@ -228,7 +232,10 @@ public class DBController extends HttpServlet {
         stmt.setString(7, (latlng==null)?"":latlng);
 
         stmt.executeUpdate();  
-        return "La empresa se ha registrado correctamente!";
+
+        retorno= "{\"nombre\": "+ nombre+ ",\"email\": "+ email+ ", \"password\": "+password+", \"identificacionFiscal\": "+identificacionFiscal+", \"descripcion\": "+descripcion+", \"ubicacion\": "+ubicacion+", \"latlng\": "+latlng+"}";
+
+        return retorno;
     }
 
     //////////////// PUT ////////////////
@@ -270,7 +277,9 @@ public class DBController extends HttpServlet {
 
         stmt.executeUpdate();  
         
-        return "Se ha modificado correctamente la empresa!";
+        retorno= "{\"id\": "+ id+ ",\"nombre\": "+ nombre+ ",\"email\": "+ email+ ", \"password\": "+password+", \"identificacionFiscal\": "+identificacionFiscal+", \"descripcion\": "+descripcion+", \"ubicacion\": "+ubicacion+", \"latlng\": "+latlng+"}";
+
+        return retorno;
     }
 
     //////////////// DELETE ////////////////
@@ -280,7 +289,9 @@ public class DBController extends HttpServlet {
         
         stmt.executeUpdate(SQL);
 
-        return "La empresa se ha eliminado correctamente!";
+        retorno= "{\"id\": "+ id+ "}";
+
+        return retorno;
     }
 
     //////////////////////////////// Reto ////////////////////////////////
@@ -304,7 +315,6 @@ public class DBController extends HttpServlet {
                     reto.setParticipantes(rs.getInt("participantes"));
                     reto.setMultimedia(rs.getString("multimedia"));
                     reto.setNivel(rs.getInt("nivel"));
-                    reto.setFecha_limite(rs.getString("fecha_limite"));
         
                     retosList.add(reto);
                 }
@@ -329,7 +339,6 @@ public class DBController extends HttpServlet {
                 reto.setParticipantes(rs.getInt("participantes"));
                 reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
-                reto.setFecha_limite(rs.getString("fecha_limite"));
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -354,7 +363,6 @@ public class DBController extends HttpServlet {
                 reto.setParticipantes(rs.getInt("participantes"));
                 reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
-                reto.setFecha_limite(rs.getString("fecha_limite"));
                 
                 retosList.add(reto);
                 }
@@ -381,7 +389,6 @@ public class DBController extends HttpServlet {
                 reto.setParticipantes(rs.getInt("participantes"));
                 reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
-                reto.setFecha_limite(rs.getString("fecha_limite"));
                 
                 retosList.add(reto);
                 }
@@ -408,7 +415,6 @@ public class DBController extends HttpServlet {
                 reto.setParticipantes(rs.getInt("participantes"));
                 reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
-                reto.setFecha_limite(rs.getString("fecha_limite"));
                 
                 retosList.add(reto);
                 }
@@ -436,7 +442,6 @@ public class DBController extends HttpServlet {
                 reto.setParticipantes(rs.getInt("participantes"));
                 reto.setMultimedia(rs.getString("multimedia"));
                 reto.setNivel(rs.getInt("nivel"));
-                reto.setFecha_limite(rs.getString("fecha_limite"));
                 
                 retosList.add(reto);
                 }
@@ -450,10 +455,10 @@ public class DBController extends HttpServlet {
     //////////////// POST ////////////////
 
     // Crea un reto con un archivo multimedia
-    public String postReto(Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, String multimedia, Integer nivel, String fecha_limite) throws SQLException{
+    public String postReto(Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, String multimedia, Integer nivel) throws SQLException{
         PreparedStatement stmt = con.prepareStatement("INSERT INTO `retos`" +
-        " (`id_creador`, `nombre`, `descripcion`, `tecnologias`, `participantesMax`, `participantes`, `multimedia`, `nivel`, `fecha_limite`)" +
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        " (`id_creador`, `nombre`, `descripcion`, `tecnologias`, `participantesMax`, `participantes`, `multimedia`, `nivel`)" +
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 
         
         stmt.setInt(1, id_creador);
@@ -464,17 +469,18 @@ public class DBController extends HttpServlet {
         stmt.setInt(6, (participantes==null)?0:participantes);
         stmt.setString(7, (multimedia==null)?"":multimedia);
         stmt.setInt(8, (nivel==null)?null:nivel);
-        stmt.setString(9, (fecha_limite==null)?null:fecha_limite);
 
         stmt.executeUpdate();  
-        return "El reto se ha registrado correctamente!";
+
+        retorno= "{\"id_creador\": "+ id_creador+ ",\"nombre\": "+ nombre+ ", \"descripcion\": "+descripcion+", \"tecnologias\": "+tecnologias+", \"participantesMax\": "+participantesMax+", \"participantes\": "+participantes+", \"multimedia\": "+multimedia+", \"nivel\": "+nivel+"}";
+        return retorno;
     }
     
     // Crea un reto sin un archivo multimedia
-    public String postReto(Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, Integer nivel, String fecha_limite) throws SQLException{
+    public String postReto(Integer id_creador, String nombre, String descripcion, String tecnologias, Integer participantesMax, Integer participantes, Integer nivel) throws SQLException{
         PreparedStatement stmt = con.prepareStatement("INSERT INTO `retos`" +
-        " (`id_creador`, `nombre`, `descripcion`, `tecnologias`, `participantesMax`, `participantes`, `nivel`, `fecha_limite`)" +
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+        " (`id_creador`, `nombre`, `descripcion`, `tecnologias`, `participantesMax`, `participantes`, `nivel`)" +
+        " VALUES (?, ?, ?, ?, ?, ?, ?);");
 
         
         stmt.setInt(1, id_creador);
@@ -484,10 +490,10 @@ public class DBController extends HttpServlet {
         stmt.setInt(5, (participantesMax==null)?0:participantesMax);
         stmt.setInt(6, (participantes==null)?0:participantes);
         stmt.setInt(7, (nivel==null)?null:nivel);
-        stmt.setString(8, (fecha_limite==null)?null:fecha_limite);
 
         stmt.executeUpdate();  
-        return "El reto se ha registrado correctamente!";
+        retorno= "{\"id_creador\": "+ id_creador+ ",\"nombre\": "+ nombre+ ", \"descripcion\": "+descripcion+", \"tecnologias\": "+tecnologias+", \"participantesMax\": "+participantesMax+", \"participantes\": "+participantes+", \"nivel\": "+nivel+"}";
+        return retorno;
     }
 
     //////////////// PUT ////////////////
@@ -508,7 +514,6 @@ public class DBController extends HttpServlet {
                 retoOld.setParticipantes(rs.getInt("participantes"));
                 retoOld.setMultimedia(rs.getString("multimedia"));
                 retoOld.setNivel(rs.getInt("nivel"));
-                retoOld.setFecha_limite(rs.getString("fecha_limite"));
             }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -522,16 +527,16 @@ public class DBController extends HttpServlet {
         retoNew.setParticipantes((participantes==null)?retoOld.getParticipantes():participantes);
         retoNew.setMultimedia((multimedia==null)?retoOld.getMultimedia():multimedia);
         retoNew.setNivel((nivel==null)?retoOld.getNivel():nivel);
-        retoNew.setFecha_limite((fecha_limite==null)?retoOld.getFecha_limite():fecha_limite);
 
         PreparedStatement stmt=con.prepareStatement("UPDATE `retos`" + 
         "SET `id_creador` = '" + retoNew.getId_Creador() + "', `nombre` = '" + retoNew.getNombre() + "', `descripcion` = '" + retoNew.getDescripcion() + "',"+
         "`tecnologias` = '" + retoNew.getTecnologias() + "', `participantesMax` = '" + retoNew.getParticipantesMax() + "', `participantes` = '" + retoNew.getParticipantes() + "', " +
-        "`multimedia` = '" + retoNew.getMultimedia() + "', `nivel` = '" + retoNew.getNivel() + "', `fecha_limite` = '" + retoNew.getFecha_limite() + "' WHERE `id` = " + id + ";");  
+        "`multimedia` = '" + retoNew.getMultimedia() + "', `nivel` = '" + retoNew.getNivel() + "' WHERE `id` = " + id + ";");  
 
         stmt.executeUpdate();  
         
-        return "Se ha modificado correctamente el reto!";
+        retorno= "{\"id\": "+ id+ ",\"id_creador\": "+ id_creador+ ",\"nombre\": "+ nombre+ ", \"descripcion\": "+descripcion+", \"tecnologias\": "+tecnologias+", \"participantesMax\": "+participantesMax+", \"participantes\": "+participantes+", \"multimedia\": "+multimedia+", \"nivel\": "+nivel+"}";
+        return retorno;
     }
 
     //////////////// DELETE ////////////////
@@ -541,7 +546,9 @@ public class DBController extends HttpServlet {
         
         stmt.executeUpdate(SQL);
 
-        return "El reto se ha eliminado correctamente!";
+        retorno= "{\"id\": "+ id+ "}";
+
+        return retorno;
     }
 
 
@@ -563,7 +570,6 @@ public class DBController extends HttpServlet {
                 comentario.setUsuario_id(rs.getInt("usuarios_id"));
                 comentario.setUsuario_id(rs.getInt("empresas_id"));
                 comentario.setMultimedia(rs.getString("multimedia"));
-                comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
                 comentariosList.add(comentario);
                 }
@@ -586,7 +592,6 @@ public class DBController extends HttpServlet {
                 comentario.setPosts_id(rs.getInt("posts_id"));
                 comentario.setUsuario_id(rs.getInt("usuarios_id"));
                 comentario.setMultimedia(rs.getString("multimedia"));
-                comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
                 comentariosList.add(comentario);
                 }
@@ -607,9 +612,8 @@ public class DBController extends HttpServlet {
                 comentario.setId(rs.getInt("id"));
                 comentario.setComentario(rs.getString("comentario"));
                 comentario.setPosts_id(rs.getInt("posts_id"));
-                comentario.setUsuario_id(rs.getInt("empresas_id"));
+                comentario.setEmpresa_id(rs.getInt("empresas_id"));
                 comentario.setMultimedia(rs.getString("multimedia"));
-                comentario.setFecha_creacion(rs.getString("fecha_creacion"));
                 
                 comentariosList.add(comentario);
                 }
@@ -623,74 +627,67 @@ public class DBController extends HttpServlet {
     //////////////// POST ////////////////
 
     // Crea un comentario con un archivo multimedia
-    public String postComentario(String comentario, Integer posts_id, Integer usuarios_id, Integer empresas_id, String multimedia, String fecha_creacion) throws SQLException{
+    public String postComentario(String comentario, Integer posts_id, Integer usuarios_id, Integer empresas_id, String multimedia) throws SQLException{
         if(usuarios_id==0){
             // Crea un comentario como una empresa
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `comentarios`" +
-            " (`comentario`, `posts_id`, `empresas_id`, `multimedia`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?, ?);");
+            " (`comentario`, `posts_id`, `empresas_id`, `multimedia`)" +
+            " VALUES (?, ?, ?, ?);");
 
             stmt.setString(1, comentario);
             stmt.setInt(2, posts_id);
             stmt.setInt(3, (empresas_id==null)?null:empresas_id);
             stmt.setString(4, (multimedia==null)?"":multimedia);
-            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El comentario se ha registrado correctamente!";
+            retorno= "{\"comentario\": "+ comentario+ ",\"posts_id\": "+ posts_id+ ", \"empresas_id\": "+empresas_id+", \"multimedia\": "+multimedia+"}";
+            return retorno;
         }else{
             // Crea un comentario como un usuario
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `comentarios`" +
-            " (`comentario`, `posts_id`, `usuarios_id`,  `multimedia`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?, ?);");
-    
-            System.out.println("usuario");
-            System.out.println(stmt);
-
+            " (`comentario`, `posts_id`, `usuarios_id`,  `multimedia`)" +
+            " VALUES (?, ?, ?, ?);");
             
             stmt.setString(1, comentario);
             stmt.setInt(2, posts_id);
             stmt.setInt(3, (usuarios_id==null)?null:usuarios_id);
             stmt.setString(4, (multimedia==null)?"":multimedia);
-            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El cometario se ha registrado correctamente!";
+
+            retorno= "{\"comentario\": "+ comentario+ ",\"posts_id\": "+ posts_id+ ", \"usuarios_id\": "+usuarios_id+", \"multimedia\": "+multimedia+"}";
+            return retorno;
         }
     }
 
     // Crea un comentario sin un archivo multimedia
-    public String postComentario(String comentario, Integer posts_id, Integer usuarios_id, Integer empresas_id, String fecha_creacion) throws SQLException{
+    public String postComentario(String comentario, Integer posts_id, Integer usuarios_id, Integer empresas_id) throws SQLException{
         if(usuarios_id==0){
             // Crea un comentario como una empresa
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `comentarios`" +
-            " (`comentario`, `posts_id`, `empresas_id`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?, ?);");
+            " (`comentario`, `posts_id`, `empresas_id`)" +
+            " VALUES (?, ?, ?);");
 
             stmt.setString(1, comentario);
             stmt.setInt(2, posts_id);
             stmt.setInt(3, (empresas_id==null)?null:empresas_id);
-            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+            retorno= "{\"comentario\": "+ comentario+ ",\"posts_id\": "+ posts_id+ ", \"empresas_id\": "+empresas_id+"}";
+            return retorno;
         }else{
             // Crea un comentario como un usuario
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `comentarios`" +
-            " (`comentario`, `posts_id`, `usuarios_id`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?, ?);");
+            " (`comentario`, `posts_id`, `usuarios_id`)" +
+            " VALUES (?, ?, ?);");
     
-            System.out.println("usuario");
-            System.out.println(stmt);
-
-            
             stmt.setString(1, comentario);
             stmt.setInt(2, posts_id);
             stmt.setInt(3, (usuarios_id==null)?null:usuarios_id);
-            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+            retorno= "{\"comentario\": "+ comentario+ ",\"posts_id\": "+ posts_id+ ", \"usuarios_id\": "+usuarios_id+"}";
+            return retorno;
         }
     }
 
@@ -720,7 +717,8 @@ public class DBController extends HttpServlet {
 
         stmt.executeUpdate();  
         
-        return "Se ha modificado correctamente el comentario!";
+        retorno= "{\"id\": "+ id+ "\"comentario\": "+ comentario+ ",\"multimedia\": "+ multimedia+ "}";
+        return retorno;
     }
 
     //////////////// DELETE ////////////////
@@ -730,7 +728,9 @@ public class DBController extends HttpServlet {
         
         stmt.executeUpdate(SQL);
 
-        return "El comentario se ha eliminado correctamente!";
+        retorno= "{\"id\": "+ id+ "}";
+
+        return retorno;
     }
 
 
@@ -753,7 +753,6 @@ public class DBController extends HttpServlet {
                 post.setUsuario_id(rs.getInt("usuarios_id"));
                 post.setEmpresa_id(rs.getInt("empresas_id"));
                 post.setMultimedia(rs.getString("multimedia"));
-                post.setFecha_creacion(rs.getString("fecha_creacion"));
     
                     postsList.add(post);
                 }
@@ -775,7 +774,6 @@ public class DBController extends HttpServlet {
                 post.setUsuario_id(rs.getInt("usuarios_id"));
                 post.setEmpresa_id(rs.getInt("empresas_id"));
                 post.setMultimedia(rs.getString("multimedia"));
-                post.setFecha_creacion(rs.getString("fecha_creacion"));
                 }
         } catch (Exception e) {
             System.out.println("Error -> "+e);
@@ -787,74 +785,67 @@ public class DBController extends HttpServlet {
     //////////////// POST ////////////////
 
     // Crea un comentario con un archivo multimedia
-    public String postNewPost(String titulo, String descripcion, Integer usuarios_id, Integer empresas_id, String multimedia, String fecha_creacion) throws SQLException{
+    public String postNewPost(String titulo, String descripcion, Integer usuarios_id, Integer empresas_id, String multimedia) throws SQLException{
         if(usuarios_id==0){
             // Crea un comentario como una empresa
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
-            " (`titulo`, `descripcion`, `empresas_id`, `multimedia`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?, ?);");
+            " (`titulo`, `descripcion`, `empresas_id`, `multimedia`)" +
+            " VALUES (?, ?, ?, ?);");
 
             stmt.setString(1, titulo);
             stmt.setString(2, descripcion);
             stmt.setInt(3, (empresas_id==null)?null:empresas_id);
             stmt.setString(4, (multimedia==null)?"":multimedia);
-            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+
+            retorno= "{\"titulo\": "+ titulo+ "\"descripcion\": "+ descripcion+ ",\"empresas_id\": "+ empresas_id+ ",\"multimedia\": "+ multimedia+ "}";
+            return retorno;
         }else{
             // Crea un comentario como un usuario
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
-            " (`titulo`, `descripcion`, `usuarios_id`, `multimedia`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?, ?);");
+            " (`titulo`, `descripcion`, `usuarios_id`, `multimedia`)" +
+            " VALUES (?, ?, ?, ?);");
     
-            System.out.println("usuario");
-            System.out.println(stmt);
-
-            
             stmt.setString(1, titulo);
             stmt.setString(2, descripcion);
             stmt.setInt(3, (usuarios_id==null)?null:usuarios_id);
             stmt.setString(4, (multimedia==null)?"":multimedia);
-            stmt.setString(5, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+            retorno= "{\"titulo\": "+ titulo+ "\"descripcion\": "+ descripcion+ ",\"usuarios_id\": "+ usuarios_id+ ",\"multimedia\": "+ multimedia+ "}";
+            return retorno;
         }
     }
 
     // Crea un comentario sin un archivo multimedia
-    public String postNewPost(String titulo, String descripcion, Integer usuarios_id, Integer empresas_id, String fecha_creacion) throws SQLException{
+    public String postNewPost(String titulo, String descripcion, Integer usuarios_id, Integer empresas_id) throws SQLException{
         if(usuarios_id==0){
             // Crea un comentario como una empresa
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
-            " (`titulo`, `descripcion`, `empresas_id`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?);");
-
+            " (`titulo`, `descripcion`, `empresas_id`)" +
+            " VALUES (?, ?, ?);");
+            
             stmt.setString(1, titulo);
             stmt.setString(2, descripcion);
             stmt.setInt(3, (empresas_id==null)?null:empresas_id);
-            stmt.setString(4, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+            retorno= "{\"titulo\": "+ titulo+ "\"descripcion\": "+ descripcion+ ",\"empresas_id\": "+ empresas_id+ "}";
+            return retorno;
         }else{
             // Crea un comentario como un usuario
             PreparedStatement stmt = con.prepareStatement("INSERT INTO `posts`" +
-            " (`titulo`, `descripcion`, `usuarios_id`, `fecha_creacion`)" +
-            " VALUES (?, ?, ?, ?);");
-    
-            System.out.println("usuario");
-            System.out.println(stmt);
-
+            " (`titulo`, `descripcion`, `usuarios_id`)" +
+            " VALUES (?, ?, ?);");
             
             stmt.setString(1, titulo);
             stmt.setString(2, descripcion);
             stmt.setInt(3, (usuarios_id==null)?null:usuarios_id);
-            stmt.setString(4, (fecha_creacion==null)?"":fecha_creacion);
     
             stmt.executeUpdate();  
-            return "El post se ha registrado correctamente!";
+            retorno= "{\"titulo\": "+ titulo+ "\"descripcion\": "+ descripcion+ ",\"usuarios_id\": "+ usuarios_id+ "}";
+            return retorno;
         }
     }
 
@@ -886,7 +877,8 @@ public class DBController extends HttpServlet {
 
         stmt.executeUpdate();  
         
-        return "Se ha modificado correctamente el post!";
+        retorno= "{\"titulo\": "+ titulo+ ", \"descripcion\": "+ descripcion+ ",\"multimedia\": "+ multimedia+ "}";
+        return retorno;
     }
 
 
@@ -897,7 +889,9 @@ public class DBController extends HttpServlet {
         
         stmt.executeUpdate(SQL);
 
-        return "El posts se ha eliminado correctamente!";
+        retorno= "{\"id\": "+ id+ "}";
+
+        return retorno;
     }
 
 
@@ -975,8 +969,6 @@ public class DBController extends HttpServlet {
         " (`usuarios_id`, `retos_id`, `multimedia`)" +
         " VALUES (?, ?, ?);");
 
-        String a="{\"error\": true}";
-
         try {
             stmt.setInt(1, usuarios_id);
             stmt.setInt(2, retos_id);
@@ -984,13 +976,16 @@ public class DBController extends HttpServlet {
 
             stmt.executeUpdate();
 
-             a= "{\"usuarios_id\": "+ usuarios_id+ ", \"retos_id\": "+retos_id+", \"multimedia\": "+multimedia+"}";
+            //retorno= "{\"usuarios_id\": "+ usuarios_id+ ", \"retos_id\": "+retos_id+", \"multimedia\": "+multimedia+"}";
+
+            retorno= "{\"usuarios_id\": "+ usuarios_id+ ", \"retos_id\": "+ retos_id+ ",\"multimedia\": "+ multimedia+ "}";
+            return retorno;
 
         } catch (Exception e) {
             //TODO: handle exception
         }
 
-        return a;
+        return retorno;
     }
 
 
@@ -1018,11 +1013,11 @@ public class DBController extends HttpServlet {
 
         stmt.executeUpdate();  
         
-        return "Se ha modificado correctamente el usuario reto!";
+        retorno= "{\"usuarios_id\": "+ usuarios_id+ ", \"retos_id\": "+ retos_id+ ",\"multimedia\": "+ multimedia+ "}";
+        return retorno;
     }
 
 
-    //////////////// DELETE ////////////////
 
 
 

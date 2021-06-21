@@ -16,9 +16,6 @@ public class PutReto extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
-
             Integer id = Integer.parseInt(request.getParameter("id"));
             Integer id_creador = Integer.parseInt(request.getParameter("id_creador"));
             String nombre = request.getParameter("nombre");
@@ -34,11 +31,7 @@ public class PutReto extends HttpServlet {
 
             String respuestaJson = db.putReto(id, id_creador, nombre, descripcion, tecnologias, participantesMax, participantes, multimedia, nivell, fecha_limite);
             
-            out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
-        
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());

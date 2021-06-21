@@ -8,7 +8,6 @@ public class Post {
     public Integer usuario_id;
     public Integer empresa_id;
     public String multimedia;
-    public String fecha_creacion;
 
     public Integer getId() {
         return this.id;
@@ -58,12 +57,4 @@ public class Post {
         this.multimedia = multimedia;
     }
 
-    public String getFecha_creacion() {
-        return this.fecha_creacion;
-    }
-
-    public void setFecha_creacion(String fecha_creacion) {
-        this.fecha_creacion = fecha_creacion;
-    }
-    
 }

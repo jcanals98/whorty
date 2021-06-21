@@ -15,29 +15,23 @@ public class PostNewPost extends HttpServlet {
         try{
             db.iniciar();  
 
-            out.println("<html>");
-            out.println("<body>");
 
             String titulo = request.getParameter("titulo");
             String descripcion = request.getParameter("descripcion");
             Integer usuarios_id = (request.getParameter("usuarios_id").equals(""))?0:Integer.parseInt(request.getParameter("usuarios_id"));
             Integer empresas_id = (request.getParameter("empresas_id").equals(""))?0:Integer.parseInt(request.getParameter("empresas_id"));
-            String fecha_limite = request.getParameter("fecha_limite");
 
 
             // Comprueba si el reto requiere de un archivo y llama la funcion que tiene archivo o la que no
-            if(!request.getParameter("multimedia_id").equals("")){
+            if(!request.getParameter("multimedia").equals("")){
                 String multimedia = request.getParameter("multimedia");
-                respuestaJson = db.postNewPost(titulo, descripcion, usuarios_id, empresas_id, multimedia, fecha_limite);
+                respuestaJson = db.postNewPost(titulo, descripcion, usuarios_id, empresas_id, multimedia);
             }else{
-                respuestaJson = db.postNewPost(titulo, descripcion, usuarios_id, empresas_id, fecha_limite);
+                respuestaJson = db.postNewPost(titulo, descripcion, usuarios_id, empresas_id);
             }
             
-            out.println(db.respuestaServidor(response.getStatus()));
             out.println(respuestaJson);
         
-            out.println("<html>");
-            out.println("<body>");
         }
         catch (SQLException e) {
             System.out.println("Error de Conexion: " + e.getMessage());
